@@ -53,7 +53,7 @@ First you will want to create a context file and include it somewhere in your cl
 
 ### Example context syntax
 
-A context file example below uses a format accepted by the java.beans.XMLDecoder class that ships with the standard Java classpath. It is further documented at the article Long Term Persistence of JavaBeans Components: XML Schema. The Tapioca library acts as a facade to this loader.
+A context file example below uses a format accepted by the java.beans.XMLDecoder class that ships with the standard Java classpath. It is further documented at the article [Long Term Persistence of JavaBeans Components: XML Schema](http://www.oracle.com/technetwork/java/persistence3-139471.html). The Tapioca library acts as a facade to this loader.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
