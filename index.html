@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Tapioca by coolarch</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Tapioca</h1>
+          <h2>Tapioca is designed to provide an extremely thin layer on top of existing, albeit obscure, portions of the standard Java class library in order to provide an IoC container.</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/coolarch/tapioca/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/coolarch/tapioca/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/coolarch/tapioca" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a id="does-tapioca-stand-for-anything" class="anchor" href="#does-tapioca-stand-for-anything" aria-hidden="true"><span class="octicon octicon-link"></span></a>Does Tapioca stand for anything?</h1>
+
+<p>Yes: (T)iny (A)PI (P)roviding (I)nversion (o)f (c)ontrol (a)rchitecture</p>
+
+<h1>
+<a id="what-are-the-goals-of-tapioca" class="anchor" href="#what-are-the-goals-of-tapioca" aria-hidden="true"><span class="octicon octicon-link"></span></a>What are the goals of Tapioca?</h1>
+
+<ul>
+<li>No external dependencies for the core library, other than the core library jar itself</li>
+<li>Core functionality always small (below 20 KiB)</li>
+<li>Rely on standard functionality that is already part of the core Java library whenever possible</li>
+<li>Do one thing, and do it well</li>
+</ul>
+
+<h1>
+<a id="how-do-i-use-it" class="anchor" href="#how-do-i-use-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How do I use it?</h1>
+
+<h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>Tapioca is designed to provide an extremely thin layer on top of existing, albeit obscure, portions of the standard Java class library in order to provide an IoC container. Tapioca does not try to be, nor is it, the Spring framework. If you need a high quality and full featured IoC/DI container, by all means investigate using Spring or Google's Guice.</p>
+
+<p>If you need an extremely lightweight container that has zero external dependencies, Tapioca is what you need.</p>
+
+<h2>
+<a id="getting-the-library" class="anchor" href="#getting-the-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting the library</h2>
+
+<p>This tutorial is targeted at users of Maven, however, those that are using build systems other than those that support Maven artifact repositories, you can download the tapioca-core.jar (and optionally tapioca-utilities.jar) from this web site and include it in your projects classpath by manual means.</p>
+
+<p>To use the tapioca-core library, add the following to the dependencies section of your pom.xml file:</p>
+
+<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;com.unboundedprime.tapioca&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;tapioca-core&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;1.0.0&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<p>To use the tapioca-utilities add-on, add the following to dependencies section of your pom.xml file:</p>
+
+<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
+    &lt;<span class="pl-ent">groupId</span>&gt;com.unboundedprime.tapioca&lt;/<span class="pl-ent">groupId</span>&gt;
+    &lt;<span class="pl-ent">artifactId</span>&gt;tapioca-utilities&lt;/<span class="pl-ent">artifactId</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;1.0.0&lt;/<span class="pl-ent">version</span>&gt;
+&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<h2>
+<a id="using-the-library" class="anchor" href="#using-the-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using the library</h2>
+
+<h3>
+<a id="creating-the-context-file" class="anchor" href="#creating-the-context-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating the context file</h3>
+
+<p>First you will want to create a context file and include it somewhere in your classpath where it may be accessed by your program. In Maven, this can be accomplished by placing it in a sub-folder of your choosing that is below the src/main/resources/ directory in your project's project directory.</p>
+
+<h3>
+<a id="example-context-syntax" class="anchor" href="#example-context-syntax" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example context syntax</h3>
+
+<p>A context file example below uses a format accepted by the java.beans.XMLDecoder class that ships with the standard Java classpath. It is further documented at the article <a href="http://www.oracle.com/technetwork/java/persistence3-139471.html">Long Term Persistence of JavaBeans Components: XML Schema</a>. The Tapioca library acts as a facade to this loader.</p>
+
+<div class="highlight highlight-xml"><pre>&lt;?<span class="pl-ent">xml</span><span class="pl-e"> version</span>=<span class="pl-s1"><span class="pl-pds">"</span>1.0<span class="pl-pds">"</span></span><span class="pl-e"> encoding</span>=<span class="pl-s1"><span class="pl-pds">"</span>UTF-8<span class="pl-pds">"</span></span> ?&gt;
+&lt;<span class="pl-ent">java</span>&gt;
+
+    &lt;<span class="pl-ent">object</span> <span class="pl-e">id</span>=<span class="pl-s1"><span class="pl-pds">"</span>childClassInstance<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>com.unboundedprime.tapioca.core.ChildTestClass<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">void</span> <span class="pl-e">property</span>=<span class="pl-s1"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">string</span>&gt;Hello World!&lt;/<span class="pl-ent">string</span>&gt;
+        &lt;/<span class="pl-ent">void</span>&gt;
+    &lt;/<span class="pl-ent">object</span>&gt;
+
+    &lt;<span class="pl-ent">object</span> <span class="pl-e">id</span>=<span class="pl-s1"><span class="pl-pds">"</span>parentClassInstance<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>com.unboundedprime.tapioca.core.ParentTestClass<span class="pl-pds">"</span></span>&gt;
+        &lt;<span class="pl-ent">void</span> <span class="pl-e">property</span>=<span class="pl-s1"><span class="pl-pds">"</span>child<span class="pl-pds">"</span></span>&gt;
+            &lt;<span class="pl-ent">object</span> <span class="pl-e">idref</span>=<span class="pl-s1"><span class="pl-pds">"</span>childClassInstance<span class="pl-pds">"</span></span>/&gt;
+        &lt;/<span class="pl-ent">void</span>&gt;
+    &lt;/<span class="pl-ent">object</span>&gt;
+
+&lt;/<span class="pl-ent">java</span>&gt;</pre></div>
+
+<h3>
+<a id="loading-the-context-into-a-container-instance" class="anchor" href="#loading-the-context-into-a-container-instance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loading the context into a container instance</h3>
+
+<div class="highlight highlight-java"><pre><span class="pl-s">final</span> <span class="pl-stj">Container</span> instance <span class="pl-k">=</span> <span class="pl-stj">Container</span><span class="pl-k">.</span><span class="pl-stj">Builder</span><span class="pl-k">.</span>buildContainerFromXmlInClasspath(<span class="pl-s1"><span class="pl-pds">"</span>context.xml<span class="pl-pds">"</span></span>);</pre></div>
+
+<h3>
+<a id="extract-an-implementation" class="anchor" href="#extract-an-implementation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extract an implementation</h3>
+
+<p>You can extract from the context based one of the interfaces it implements, or the class itself.</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-s">final</span> <span class="pl-stj">MyService</span> myService <span class="pl-k">=</span> instance<span class="pl-k">.</span>getObjectThatImplementsOrNull(<span class="pl-stj">MyService</span><span class="pl-k">.</span>class);</pre></div>
+
+<h3>
+<a id="extract-all-that-implement" class="anchor" href="#extract-all-that-implement" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extract all that implement</h3>
+
+<p>You can extract a List of multiple implementations from the container as follows:</p>
+
+<div class="highlight highlight-java"><pre><span class="pl-s">final</span> <span class="pl-st">List&lt;<span class="pl-stj">MyService</span>&gt;</span> myServices <span class="pl-k">=</span> instance<span class="pl-k">.</span>getObjectsThatImplement(<span class="pl-stj">MyService</span><span class="pl-k">.</span>class);</pre></div>
+
+<p>This option allows for multiple implementations to be discovered for dynamic use in your application.</p>
+
+<h1>
+<a id="current-status" class="anchor" href="#current-status" aria-hidden="true"><span class="octicon octicon-link"></span></a>Current Status</h1>
+
+<p>Tapioca 1.0.0 has been released into the Maven central repository. A non-Maven downloadable version is also being prepared and will be made available here in the downloads section shortly.</p>
+        </section>
+
+        <footer>
+          Tapioca is maintained by <a href="https://github.com/coolarch">coolarch</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
