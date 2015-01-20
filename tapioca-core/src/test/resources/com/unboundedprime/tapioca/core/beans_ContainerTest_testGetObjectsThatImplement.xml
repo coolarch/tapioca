@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<java>
+	
+	<object id="first" class="com.unboundedprime.tapioca.core.FirstCommonGroupedClass"/>
+	
+	<object id="second" class="com.unboundedprime.tapioca.core.SecondCommonGroupedClass"/>
+
+	<object id="third" class="com.unboundedprime.tapioca.core.ThirdCommonGroupedClass"/>
+
+	<object id="fourth" class="com.unboundedprime.tapioca.core.FourthNonCommonGroupedClass"/>
+
+</java>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<java>
+	
+	<object id="childClassInstance" class="com.unboundedprime.tapioca.core.ChildTestClass">
+		<void property="text">
+			<string>Hello World!</string>
+		</void>
+	</object>
+	
+	<object id="parentClassInstance" class="com.unboundedprime.tapioca.core.ParentTestClass">
+		<void property="child">
+			<object idref="childClassInstance"/>
+		</void>
+	</object>
+
+</java>

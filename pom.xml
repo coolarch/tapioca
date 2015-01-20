@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+  
+	<name>Tapioca - Parent Project</name>
+	
+	<description>
+		Tapioca is designed to provide an extremely thin layer on top of existing, albeit obscure, portions of the standard Java
+		class library in order to provide an IoC container. 
+	</description>
+	
+	<groupId>com.unboundedprime.tapioca</groupId>
+	<artifactId>tapioca</artifactId>
+	<version>1.1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	<url>http://www.unboundedprime.com/</url>
+	
+	<modules>
+		<module>tapioca-core</module>
+		<module>tapioca-utilities</module>
+	</modules>
+	
+	<scm>
+		<connection>scm:svn:http://tapioca.googlecode.com/svn/trunk/</connection>
+		<developerConnection>scm:svn:https://tapioca.googlecode.com/svn/trunk/</developerConnection>
+		<url>http://code.google.com/p/tapioca/source/browse/</url>
+  </scm>
+	
+	<developers>
+		<developer>
+			<name>Matthew Werny</name>
+			<email>code [AT] unboundedprime [DOT] com</email>
+			<timezone>GMT -0700</timezone>
+			<url>http://www.unboundedprime.com</url>
+			<roles>
+				<role>Project Leader</role>
+			</roles>
+		</developer>
+	</developers>
+	
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<debug>false</debug>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0-beta-2</version>
+				<configuration>
+					<reportPlugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<version>2.7</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-jxr-plugin</artifactId>
+							<version>2.1</version>
+							<configuration>
+								<aggregate>true</aggregate>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-report-plugin</artifactId>
+							<version>2.6</version>
+						</plugin>
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>cobertura-maven-plugin</artifactId>
+							<version>2.4</version>
+							<configuration>
+								<formats>
+									<format>xml</format>
+									<format>html</format>
+								</formats>
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-checkstyle-plugin</artifactId>
+							<version>2.6</version>
+						</plugin>
+					</reportPlugins>
+				</configuration>
+			</plugin>
+		
+			<plugin>
+				<inherited>false</inherited>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.9.0</version>
+				<configuration>
+					<header>${basedir}/src/main/license/header.txt</header>
+					<failIfMissing>true</failIfMissing>
+					<aggregate>true</aggregate>
+					<strictCheck>true</strictCheck>
+					<properties>
+						<owner>Unbounded Prime, LLC</owner>
+					</properties>
+					<excludes>
+						<exclude>LICENSE.txt</exclude>
+						<exclude>**/src/test/resources/**</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>check-headers</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<mavenExecutorId>forked-path</mavenExecutorId>
+					<connectionType>connection</connectionType>
+					<releaseProfiles>release</releaseProfiles>
+					<preparationGoals>clean install</preparationGoals>
+					<remoteTagging>false</remoteTagging>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.7</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.0-beta-4</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>false</doCheck>
+					<doUpdate>true</doUpdate>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<compress>true</compress>
+						<manifestEntries>
+							<SCM-Revision>${buildNumber}</SCM-Revision>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		
+		</plugins>
+	</build>
+
+	<dependencies>
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+		</dependency>
+		
+	</dependencies>
+	
+	<profiles>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.1</version>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	
+</project>
